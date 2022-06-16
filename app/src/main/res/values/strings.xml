@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Dictionary</string>
+    <string name="title_activity_main2">MainActivity2</string>
+    <string name="intro_text">This is a simple dictionary , Provide  English language support. The dictionary was created using the Dictionary API (http://dictionaryapi.dev/)</string>
+</resources>
