@@ -51,30 +51,4 @@ object WordInfoModule {
     @Provides
     fun provideWordInfoDao(database: WordInfoDatabase) = database.dao
 
-
-    @Provides
-    @Singleton
-    fun provideDictionaryApi(): DictionaryApi{
-
-        return  Retrofit.Builder()
-            .baseUrl(DictionaryApi.BASE_URL)
-            .client(OkHttpClient.Builder()
-            .addInterceptor { chain ->
-                chain.proceed(chain.request().newBuilder().build())
-            }
-            .also { client ->
-                if (BuildConfig.DEBUG) {
-                    val logging = HttpLoggingInterceptor()
-                    logging.setLevel(HttpLoggingInterceptor.Level.BODY)
-                    client.addInterceptor(logging)
-                }
-
-            }.build()
-        )
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(DictionaryApi::class.java)
-    }
-
-
 }

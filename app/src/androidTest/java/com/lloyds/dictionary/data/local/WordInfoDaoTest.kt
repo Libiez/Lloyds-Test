@@ -1,5 +1,8 @@
 package com.lloyds.dictionary.data.local
 
+import android.content.Context
+import androidx.room.Room
+import androidx.test.core.app.ApplicationProvider
 import com.lloyds.dictionary.dictionary.data.local.WordInfoDao
 import com.lloyds.dictionary.dictionary.data.local.WordInfoDatabase
 import com.lloyds.dictionary.dictionary.data.local.entity.WordInfoEntity
@@ -17,19 +20,22 @@ import javax.inject.Named
 
 @ExperimentalCoroutinesApi
 @HiltAndroidTest
-@UninstallModules(WordInfoModule::class)
+/*@UninstallModules(WordInfoModule::class)*/
 class WordInfoDaoTest {
 
     @get:Rule var hitRule = HiltAndroidRule(this)
 
-     @Inject
-     @Named("test_db")
+     /*@Inject
+     @Named("test_db")*/
      lateinit var dataBase: WordInfoDatabase
      private lateinit var dao: WordInfoDao
 
     @Before
     fun setup(){
+        val context = ApplicationProvider.getApplicationContext<Context>()
         hitRule.inject()
+        dao = dataBase.dao
+        dataBase = Room.inMemoryDatabaseBuilder(context, WordInfoDatabase::class.java).build()
         dao = dataBase.dao
     }
 

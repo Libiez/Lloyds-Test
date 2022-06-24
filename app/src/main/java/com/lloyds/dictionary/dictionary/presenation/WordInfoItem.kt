@@ -1,5 +1,6 @@
 package com.lloyds.dictionary.dictionary.presenation
 
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -40,8 +41,10 @@ fun WordInfoItem(
             meaning.definitions.forEachIndexed { i, definition ->
 
                 Text(text = "${i + 1}. ${definition.definition}",fontFamily = FontFamily.Monospace)
+                Log.d("WordInfoItem:"," ${i + 1}. ${definition.definition}")
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(text = "Example: ${definition.example}",fontFamily = FontFamily.Monospace)
+                Log.d("WordInfoItem:", "Example: ${definition.example}")
 
                 Spacer(modifier = Modifier.height(8.dp))
 

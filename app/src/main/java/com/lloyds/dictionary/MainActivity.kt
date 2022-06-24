@@ -18,6 +18,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
@@ -50,6 +51,8 @@ class MainActivity : ComponentActivity() {
         var SEARCH_SCREEN = "search_screen"
         var FIRST_LAUNCH = "first_launch"
         var LAUNCHED = "launched"
+        var SEARCH_TEXTFIELD = "searchTextField"
+        var SEARCH_LOADER = "searchLoader"
     }
 
     private lateinit var viewModel: WordInfoViewModel
@@ -80,7 +83,7 @@ class MainActivity : ComponentActivity() {
             }
 
             composable(SEARCH_SCREEN){
-                SearchScreen(navController)
+                SearchScreen()
                 BackHandler(true) {
                    finish()
                 }
@@ -153,10 +156,10 @@ class MainActivity : ComponentActivity() {
 
     }
 
-
     @Composable
-    private fun SearchScreen(navController: NavHostController) {
-        val viewModel: WordInfoViewModel = hiltViewModel()
+    fun SearchScreen() {
+        //val viewModel: WordInfoViewModel = hiltViewModel()
+
 
         val state = viewModel.state.value
         val scaffoldState = rememberScaffoldState()
@@ -190,12 +193,24 @@ class MainActivity : ComponentActivity() {
                     TextField(
                         value = viewModel.searchQuery.value,
                         onValueChange = viewModel::onSearch,
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier.testTag(SEARCH_TEXTFIELD).fillMaxWidth(),
                         placeholder = {
                             Text(text = "Search...",fontFamily = FontFamily.Monospace)
                         })
 
-                    CustomLinearProgressBar(viewModel.state.value.isLoading)
+                    AnimatedVisibility(visible = viewModel.state.value.isLoading, modifier = Modifier.testTag(SEARCH_LOADER)) {
+
+                        Column(modifier = Modifier.fillMaxWidth()) {
+
+                            LinearProgressIndicator(
+                                modifier = Modifier.fillMaxWidth()
+                                    .height(4.dp),
+                                backgroundColor = Color.LightGray,
+                                color = Color.Red
+                            )
+                        }
+                    }
+
                     Spacer(modifier = Modifier.height(16.dp))
                     LazyColumn(modifier = Modifier.fillMaxSize()) {
 
@@ -221,6 +236,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+
     @Preview(showBackground = true)
     @Composable
     fun DefaultPreview3() {
@@ -229,23 +245,6 @@ class MainActivity : ComponentActivity() {
             Splashscreen()
         }
 
-
-    }
-    @Composable
-    private fun CustomLinearProgressBar(isVisible: Boolean) {
-
-        AnimatedVisibility(visible = isVisible) {
-            Column(modifier = Modifier.fillMaxWidth()) {
-                LinearProgressIndicator(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(4.dp),
-                    backgroundColor = Color.LightGray,
-                    color = Color.Red,
-                )
-            }
-
-        }
 
     }
 }
