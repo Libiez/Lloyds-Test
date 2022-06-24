@@ -23,3 +23,5 @@ Here's a simple dictionary application powered by https://dictionaryapi.dev/  AP
 Dictionary architecture is strongly based on
 the MVVM with Clean Architecture
 
+You can view the app record by clicking on the gif 
+
