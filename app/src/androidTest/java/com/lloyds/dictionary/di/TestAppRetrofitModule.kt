@@ -1,4 +1,5 @@
 package com.lloyds.dictionary.di
+
 import com.lloyds.dictionary.dictionary.data.remote.DictionaryApi
 import com.lloyds.dictionary.dictionary.di.RetrofitModule
 import dagger.Module
@@ -11,11 +12,10 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
-
 @Module
 @TestInstallIn(
     components = [SingletonComponent::class],
-    replaces = [ RetrofitModule::class]
+    replaces = [RetrofitModule::class]
 )
 object TestAppRetrofitModule {
 
@@ -46,5 +46,4 @@ object TestAppRetrofitModule {
     fun provideApiClient(retrofit: Retrofit): DictionaryApi {
         return retrofit.create(DictionaryApi::class.java)
     }
-
 }

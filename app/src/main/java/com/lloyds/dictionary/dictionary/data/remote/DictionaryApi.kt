@@ -6,7 +6,7 @@ import retrofit2.http.Path
 
 interface DictionaryApi {
 
-    companion object{
+    companion object {
         const val BASE_URL = "https://api.dictionaryapi.dev/"
     }
 

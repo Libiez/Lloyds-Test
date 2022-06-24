@@ -37,13 +37,17 @@ fun WordInfoItem(
 
         wordInfo.meanings.forEach { meaning ->
 
-            Text(text = meaning.partOfSpeech, fontWeight = FontWeight.Bold,fontFamily = FontFamily.Monospace)
+            Text(
+                text = meaning.partOfSpeech,
+                fontWeight = FontWeight.Bold,
+                fontFamily = FontFamily.Monospace
+            )
             meaning.definitions.forEachIndexed { i, definition ->
 
-                Text(text = "${i + 1}. ${definition.definition}",fontFamily = FontFamily.Monospace)
-                Log.d("WordInfoItem:"," ${i + 1}. ${definition.definition}")
+                Text(text = "${i + 1}. ${definition.definition}", fontFamily = FontFamily.Monospace)
+                Log.d("WordInfoItem:", " ${i + 1}. ${definition.definition}")
                 Spacer(modifier = Modifier.height(8.dp))
-                Text(text = "Example: ${definition.example}",fontFamily = FontFamily.Monospace)
+                Text(text = "Example: ${definition.example}", fontFamily = FontFamily.Monospace)
                 Log.d("WordInfoItem:", "Example: ${definition.example}")
 
                 Spacer(modifier = Modifier.height(8.dp))

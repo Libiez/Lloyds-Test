@@ -14,7 +14,6 @@ data class DefinitionDto(
             antonyms = antonyms,
             synonyms = synonyms,
             example = example
-
         )
     }
 }

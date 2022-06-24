@@ -21,10 +21,9 @@ class SearchComposeTest {
     @Test
     fun searchFiledIsDisplayed() {
         rule.setContent {
-         MainActivity().SearchScreen()
+            MainActivity().SearchScreen()
         }
         rule.onNode(hasTestTag(MainActivity.SEARCH_TESTIFIED))
             .assertIsDisplayed()
     }
-
 }

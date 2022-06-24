@@ -44,7 +44,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    companion object{
+    companion object {
 
         var SPLASH_SCREEN = "splash_screen"
         var SEARCH_SCREEN = "search_screen"
@@ -55,7 +55,7 @@ class MainActivity : ComponentActivity() {
     }
 
     private lateinit var viewModel: WordInfoViewModel
-    private var isLaunched:String?=null
+    private var isLaunched: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,22 +69,22 @@ class MainActivity : ComponentActivity() {
     }
 
     @Composable
-    fun Navigation(){
+    fun Navigation() {
         val navController = rememberNavController()
-        NavHost(navController = navController, startDestination = SPLASH_SCREEN){
+        NavHost(navController = navController, startDestination = SPLASH_SCREEN) {
 
             viewModel.viewModelScope.launch {
                 isLaunched = viewModel.isLaunched()
             }
 
-            composable(SPLASH_SCREEN){
+            composable(SPLASH_SCREEN) {
                 Splashscreen(navController)
             }
 
-            composable(SEARCH_SCREEN){
+            composable(SEARCH_SCREEN) {
                 SearchScreen()
                 BackHandler(true) {
-                   finish()
+                    finish()
                 }
             }
 
@@ -93,11 +93,11 @@ class MainActivity : ComponentActivity() {
 
 
     @Composable
-    fun Splashscreen(navController:NavController?=null){
+    fun Splashscreen(navController: NavController? = null) {
         val scale = remember {
             androidx.compose.animation.core.Animatable(0f)
         }
-        LaunchedEffect(key1 = true){
+        LaunchedEffect(key1 = true) {
             scale.animateTo(
                 targetValue = 0.3f,
                 animationSpec = tween(
@@ -115,18 +115,22 @@ class MainActivity : ComponentActivity() {
 
         Box(
             contentAlignment = Alignment.Center,
-            modifier =Modifier.fillMaxSize()) {
+            modifier = Modifier.fillMaxSize()
+        ) {
 
-           Row {
-               Image(
-                   painter = painterResource(id = R.drawable.auto_stories),
-                   contentDescription = "")
-               Spacer(modifier = Modifier.width(8.dp))
-                  Text(text = stringResource(R.string.app_name),
-                      modifier = Modifier.padding(8.dp),
-                      fontFamily = FontFamily.Monospace,
-                      fontSize = 20.sp)
-           }
+            Row {
+                Image(
+                    painter = painterResource(id = R.drawable.auto_stories),
+                    contentDescription = ""
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(
+                    text = stringResource(R.string.app_name),
+                    modifier = Modifier.padding(8.dp),
+                    fontFamily = FontFamily.Monospace,
+                    fontSize = 20.sp
+                )
+            }
 
             if (isLaunched.isNullOrEmpty()) {
 
@@ -134,14 +138,16 @@ class MainActivity : ComponentActivity() {
                     viewModel.saveLaunch(FIRST_LAUNCH)
                 }
 
-                Text(text = stringResource(id = R.string.intro_text),
+                Text(
+                    text = stringResource(id = R.string.intro_text),
                     modifier = Modifier
                         .padding(top = 200.dp)
                         .padding(16.dp),
                     textAlign = TextAlign.Center, fontSize = 20.sp,
                     fontFamily = FontFamily.Monospace,
-                    lineHeight = 25.sp)
-            }else if(isLaunched.equals(FIRST_LAUNCH)){
+                    lineHeight = 25.sp
+                )
+            } else if (isLaunched.equals(FIRST_LAUNCH)) {
 
                 viewModel.viewModelScope.launch {
                     viewModel.saveLaunch(LAUNCHED)
@@ -150,15 +156,10 @@ class MainActivity : ComponentActivity() {
             }
 
         }
-
-
-
     }
 
     @Composable
     fun SearchScreen() {
-        //val viewModel: WordInfoViewModel = hiltViewModel()
-
 
         val state = viewModel.state.value
         val scaffoldState = rememberScaffoldState()
@@ -192,17 +193,23 @@ class MainActivity : ComponentActivity() {
                     TextField(
                         value = viewModel.searchQuery.value,
                         onValueChange = viewModel::onSearch,
-                        modifier = Modifier.testTag(SEARCH_TESTIFIED).fillMaxWidth(),
+                        modifier = Modifier
+                            .testTag(SEARCH_TESTIFIED)
+                            .fillMaxWidth(),
                         placeholder = {
-                            Text(text = "Search...",fontFamily = FontFamily.Monospace)
+                            Text(text = "Search...", fontFamily = FontFamily.Monospace)
                         })
 
-                    AnimatedVisibility(visible = viewModel.state.value.isLoading, modifier = Modifier.testTag(SEARCH_LOADER)) {
+                    AnimatedVisibility(
+                        visible = viewModel.state.value.isLoading,
+                        modifier = Modifier.testTag(SEARCH_LOADER)
+                    ) {
 
                         Column(modifier = Modifier.fillMaxWidth()) {
 
                             LinearProgressIndicator(
-                                modifier = Modifier.fillMaxWidth()
+                                modifier = Modifier
+                                    .fillMaxWidth()
                                     .height(4.dp),
                                 backgroundColor = Color.LightGray,
                                 color = Color.Red
@@ -229,12 +236,9 @@ class MainActivity : ComponentActivity() {
                     }
 
                 }
-
-
             }
         }
     }
-
 
     @Preview(showBackground = true)
     @Composable
@@ -243,8 +247,6 @@ class MainActivity : ComponentActivity() {
         Surface(modifier = Modifier.fillMaxSize()) {
             Splashscreen()
         }
-
-
     }
 }
 

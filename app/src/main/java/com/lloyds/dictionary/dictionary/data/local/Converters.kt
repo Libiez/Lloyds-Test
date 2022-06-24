@@ -24,5 +24,4 @@ class Converters(private val jsonParser: JsonParser) {
             object : TypeToken<ArrayList<Meaning>>(){}.type
         ) ?: "[]"
     }
-
 }

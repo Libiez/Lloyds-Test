@@ -14,7 +14,7 @@ import org.junit.Test
 
 
 @HiltAndroidTest
- class MainActivityTest {
+class MainActivityTest {
 
     @get:Rule(order = 0)
     var hiltRule = HiltAndroidRule(this)
@@ -39,15 +39,13 @@ import org.junit.Test
 
             androidComposeTestRule.activity.SearchScreen()
         }
-
         androidComposeTestRule.onRoot().printToLog("SearchScreen")
 
         androidComposeTestRule.onNode(hasTestTag(SEARCH_TESTIFIED))
-           .performTextInput("Bank")
+            .performTextInput("Bank")
 
         androidComposeTestRule.onNode(hasTestTag(SEARCH_TESTIFIED))
             .assertTextContains("Bank")
-
     }
 
     @Test
@@ -56,19 +54,16 @@ import org.junit.Test
             WordInfoItem(returnCustomList()[0])
         }
         androidComposeTestRule.onNodeWithText("bank")
-            .assertExists().assertExists().assertTextEquals( "bank").assertIsDisplayed()
+            .assertExists().assertExists().assertTextEquals("bank").assertIsDisplayed()
 
         androidComposeTestRule.onNodeWithText("bæŋk")
-            .assertExists().assertIsDisplayed().assertTextEquals( "bæŋk")
+            .assertExists().assertIsDisplayed().assertTextEquals("bæŋk")
 
         androidComposeTestRule.onNodeWithText("Example: bloodBank 1")
-            .assertExists().assertIsDisplayed().assertTextEquals( "Example: bloodBank 1")
-
-
-
+            .assertExists().assertIsDisplayed().assertTextEquals("Example: bloodBank 1")
     }
-    private fun returnCustomList(): List<WordInfo> {
 
+    private fun returnCustomList(): List<WordInfo> {
         val definitions = mutableListOf<Definition>()
         for (i in 1..5) {
             definitions.add(
@@ -83,9 +78,7 @@ import org.junit.Test
         val meaning1 = Meaning(definitions, "noun")
         val meaning2 = Meaning(definitions, "noun")
         val meanings: List<Meaning> = listOf(meaning1, meaning2)
-
         val wordInfoEntity = WordInfo(meanings, "bæŋk", "bank")
-
         return listOf(wordInfoEntity)
     }
 

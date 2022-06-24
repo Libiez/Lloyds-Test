@@ -72,17 +72,16 @@ class WordInfoViewModel @Inject constructor(
         }
     }
 
-    suspend fun isLaunched(): String?  = withContext(Dispatchers.Default){
+    suspend fun isLaunched(): String? = withContext(Dispatchers.Default) {
         userPreferences.isFirstLaunch.first()
     }
-    suspend fun saveLaunch(launch:String) {
+
+    suspend fun saveLaunch(launch: String) {
         userPreferences.saveLaunch(launch)
 
     }
 
-
     sealed class UIEvent {
         data class ShowSnackbar(val message: String) : UIEvent()
     }
-
 }

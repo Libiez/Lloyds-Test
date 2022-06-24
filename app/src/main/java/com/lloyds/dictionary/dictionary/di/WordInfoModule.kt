@@ -23,23 +23,22 @@ object WordInfoModule {
 
     @Provides
     @Singleton
-    fun provideGetWordInfoUseCases(repository: WordInfoRepository): GetWordInfo{
+    fun provideGetWordInfoUseCases(repository: WordInfoRepository): GetWordInfo {
         return GetWordInfo(repository)
     }
 
     @Provides
     @Singleton
-    fun provideWordInfoRepository(db: WordInfoDatabase,api: DictionaryApi): WordInfoRepository{
-        return  WordInfoRepositoryImpl(api,db.dao)
+    fun provideWordInfoRepository(db: WordInfoDatabase, api: DictionaryApi): WordInfoRepository {
+        return WordInfoRepositoryImpl(api, db.dao)
     }
 
     @Provides
     @Singleton
-    fun provideWordInfoDatabase(app:Application): WordInfoDatabase  {
-        return  Room.databaseBuilder(
-            app, WordInfoDatabase::class.java,"word_db"
-        ).addTypeConverter(Converters(GsonParser(Gson()))).
-        build()
+    fun provideWordInfoDatabase(app: Application): WordInfoDatabase {
+        return Room.databaseBuilder(
+            app, WordInfoDatabase::class.java, "word_db"
+        ).addTypeConverter(Converters(GsonParser(Gson()))).build()
     }
 
     @Singleton

@@ -29,51 +29,47 @@ object TestAppModule {
 
     @Provides
     @Named("test_db")
-    fun provideInMemoryDb(@ApplicationContext context: Context)=
+    fun provideInMemoryDb(@ApplicationContext context: Context) =
         Room.inMemoryDatabaseBuilder(context, WordInfoDatabase::class.java)
             .addTypeConverter(Converters(GsonParser(Gson())))
             .allowMainThreadQueries()
             .build()
 
-   @Provides
-    fun provideUserPreference(@ApplicationContext context: Context)=
-       UserPreferences(context)
+    @Provides
+    fun provideUserPreference(@ApplicationContext context: Context) =
+        UserPreferences(context)
 
-  @Provides
+    @Provides
     fun provideGetWordInfoUseCases(repository: WordInfoRepository): GetWordInfo {
         return GetWordInfo(repository)
     }
 
     @Provides
-    fun provideDictionaryApi(): DictionaryApi{
+    fun provideDictionaryApi(): DictionaryApi {
 
-        return  Retrofit.Builder()
+        return Retrofit.Builder()
             .baseUrl(DictionaryApi.BASE_URL)
             .client(
                 OkHttpClient.Builder()
-                .addInterceptor { chain ->
-                    chain.proceed(chain.request().newBuilder().build())
-                }
-                .also { client ->
-                    if (BuildConfig.DEBUG) {
-                        val logging = HttpLoggingInterceptor()
-                        logging.setLevel(HttpLoggingInterceptor.Level.BODY)
-                        client.addInterceptor(logging)
+                    .addInterceptor { chain ->
+                        chain.proceed(chain.request().newBuilder().build())
                     }
+                    .also { client ->
+                        if (BuildConfig.DEBUG) {
+                            val logging = HttpLoggingInterceptor()
+                            logging.setLevel(HttpLoggingInterceptor.Level.BODY)
+                            client.addInterceptor(logging)
+                        }
 
-                }.build()
+                    }.build()
             )
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(DictionaryApi::class.java)
     }
 
-
     @Provides
-    fun provideWordInfoRepository(db: WordInfoDatabase,api: DictionaryApi): WordInfoRepository {
-        return  WordInfoRepositoryImpl(api,db.dao)
+    fun provideWordInfoRepository(db: WordInfoDatabase, api: DictionaryApi): WordInfoRepository {
+        return WordInfoRepositoryImpl(api, db.dao)
     }
-
-
-
 }

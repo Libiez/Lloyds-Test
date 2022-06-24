@@ -17,7 +17,7 @@ import org.junit.runner.RunWith
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @RunWith(AndroidJUnit4::class)
-class WordInfoViewModelTest: TestCase(){
+class WordInfoViewModelTest : TestCase() {
 
     private lateinit var viewModel: WordInfoViewModel
     private lateinit var userPreferences: UserPreferences
@@ -27,11 +27,11 @@ class WordInfoViewModelTest: TestCase(){
     @Before
     override fun setUp() {
         super.setUp()
-       val context = ApplicationProvider.getApplicationContext<Context>()
-       userPreferences = UserPreferences(context)
-        fakeWordInfoRepositoryTest= FakeWordInfoRepositoryTest()
-       getWordInfo = GetWordInfo(fakeWordInfoRepositoryTest)
-       viewModel = WordInfoViewModel(getWordInfo,userPreferences)
+        val context = ApplicationProvider.getApplicationContext<Context>()
+        userPreferences = UserPreferences(context)
+        fakeWordInfoRepositoryTest = FakeWordInfoRepositoryTest()
+        getWordInfo = GetWordInfo(fakeWordInfoRepositoryTest)
+        viewModel = WordInfoViewModel(getWordInfo, userPreferences)
 
     }
 
@@ -44,7 +44,7 @@ class WordInfoViewModelTest: TestCase(){
     @Test
     fun testErrorSearch() = kotlinx.coroutines.test.runTest {
 
-        fakeWordInfoRepositoryTest.wordFlow= flow {
+        fakeWordInfoRepositoryTest.wordFlow = flow {
             emit(Resource.Error(data = emptyList(), message = "Unknown Error"))
             delay(3000L)
         }
@@ -56,17 +56,13 @@ class WordInfoViewModelTest: TestCase(){
     @Test
     fun testLoadingSearch() = kotlinx.coroutines.test.runTest {
 
-        fakeWordInfoRepositoryTest.wordFlow= flow {
+        fakeWordInfoRepositoryTest.wordFlow = flow {
             emit(Resource.Loading(data = emptyList()))
             delay(3000L)
         }
 
-        getWordInfo("bank").onEach { result->
+        getWordInfo("bank").onEach { result ->
             assertThat(result is Resource.Loading)
         }
-
     }
-
-
-
 }
