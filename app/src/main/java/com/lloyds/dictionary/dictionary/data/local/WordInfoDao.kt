@@ -10,7 +10,7 @@ import com.lloyds.dictionary.dictionary.data.local.entity.WordInfoEntity
 interface WordInfoDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertWordInfo(infos:List<WordInfoEntity>)
+    suspend fun insertWordInfo(info:List<WordInfoEntity>)
 
     @Query("DELETE FROM wordInfoEntity WHERE word IN(:words)")
     suspend fun deleteWordInfo(words:List<String>)

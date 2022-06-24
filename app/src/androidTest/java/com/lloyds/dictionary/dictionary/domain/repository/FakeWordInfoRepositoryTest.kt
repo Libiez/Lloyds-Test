@@ -7,7 +7,6 @@ import com.lloyds.dictionary.dictionary.domain.model.WordInfo
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import org.junit.Assert.*
 
 class FakeWordInfoRepositoryTest: WordInfoRepository{
 
@@ -20,25 +19,27 @@ class FakeWordInfoRepositoryTest: WordInfoRepository{
         delay(3000L)
     }
 
-    private val wordErrorFlow  = flow{
-        emit(Resource.Error(data = emptyList<List<WordInfo>>(), message = "Unknown Error"))
-        delay(3000L)
-    }
 
-    private fun returnCustomList():List<WordInfo>{
+    private fun returnCustomList(): List<WordInfo> {
 
         val definitions = mutableListOf<Definition>()
-        for(i in 1..5){
-            definitions.add(Definition(definition = "institution $i", example = "bloodBank $i",synonyms=null, antonyms = null))
+        for (i in 1..5) {
+            definitions.add(
+                Definition(
+                    definition = "institution $i",
+                    example = "bloodBank $i",
+                    synonyms = null,
+                    antonyms = null
+                )
+            )
         }
-        val meaning1 = Meaning(definitions,"noun")
-        val meaning2 = Meaning(definitions,"noun")
-        val meanings: List<Meaning> = listOf(meaning1,meaning2)
+        val meaning1 = Meaning(definitions, "noun")
+        val meaning2 = Meaning(definitions, "noun")
+        val meanings: List<Meaning> = listOf(meaning1, meaning2)
 
-        val wordInfoEntity=WordInfo(meanings,"bæŋk","bank")
-        val wordInfo  = listOf(wordInfoEntity)
+        val wordInfoEntity = WordInfo(meanings, "bæŋk", "bank")
 
-        return  wordInfo
+        return listOf(wordInfoEntity)
     }
 
 }

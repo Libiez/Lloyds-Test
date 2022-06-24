@@ -20,13 +20,13 @@ import javax.inject.Named
 
 @ExperimentalCoroutinesApi
 @HiltAndroidTest
-/*@UninstallModules(WordInfoModule::class)*/
+@UninstallModules(WordInfoModule::class)
 class WordInfoDaoTest {
 
     @get:Rule var hitRule = HiltAndroidRule(this)
 
-     /*@Inject
-     @Named("test_db")*/
+     @Inject
+     @Named("test_db")
      lateinit var dataBase: WordInfoDatabase
      private lateinit var dao: WordInfoDao
 

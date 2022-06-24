@@ -29,7 +29,6 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -51,7 +50,7 @@ class MainActivity : ComponentActivity() {
         var SEARCH_SCREEN = "search_screen"
         var FIRST_LAUNCH = "first_launch"
         var LAUNCHED = "launched"
-        var SEARCH_TEXTFIELD = "searchTextField"
+        var SEARCH_TESTIFIED = "searchTextField"
         var SEARCH_LOADER = "searchLoader"
     }
 
@@ -193,7 +192,7 @@ class MainActivity : ComponentActivity() {
                     TextField(
                         value = viewModel.searchQuery.value,
                         onValueChange = viewModel::onSearch,
-                        modifier = Modifier.testTag(SEARCH_TEXTFIELD).fillMaxWidth(),
+                        modifier = Modifier.testTag(SEARCH_TESTIFIED).fillMaxWidth(),
                         placeholder = {
                             Text(text = "Search...",fontFamily = FontFamily.Monospace)
                         })

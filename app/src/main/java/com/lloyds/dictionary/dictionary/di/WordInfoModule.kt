@@ -2,7 +2,6 @@ package com.lloyds.dictionary.dictionary.di
 
 import android.app.Application
 import androidx.room.Room
-import com.lloyds.dictionary.BuildConfig
 import com.lloyds.dictionary.dictionary.data.local.Converters
 import com.lloyds.dictionary.dictionary.data.local.WordInfoDatabase
 import com.lloyds.dictionary.dictionary.data.remote.DictionaryApi
@@ -15,10 +14,6 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 

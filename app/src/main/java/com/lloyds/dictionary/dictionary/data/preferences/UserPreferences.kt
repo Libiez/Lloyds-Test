@@ -17,19 +17,6 @@ class  UserPreferences @Inject constructor (@ApplicationContext context: Context
 
     private val applicationContext = context.applicationContext
 
-
-    suspend fun saveLanguage(language: String) {
-        applicationContext.dataStore.edit { preference ->
-            preference[key_language] = language
-        }
-    }
-
-    val savedLanguage: Flow<String?>
-        get() = applicationContext.dataStore.data.map { preference ->
-            preference[key_language]
-
-        }
-
     suspend fun saveLaunch(launch: String) {
         applicationContext.dataStore.edit { preference ->
             preference[key_launch] = launch
@@ -47,10 +34,4 @@ class  UserPreferences @Inject constructor (@ApplicationContext context: Context
         private val key_launch = stringPreferencesKey("pref_launch")
     }
 
-    suspend fun clear(){
-        applicationContext.dataStore.edit { preferences ->
-            preferences.clear()
-
-        }
-    }
 }

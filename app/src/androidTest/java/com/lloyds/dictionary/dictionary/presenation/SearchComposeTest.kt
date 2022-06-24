@@ -2,7 +2,6 @@ package com.lloyds.dictionary.dictionary.presenation
 
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.hasTestTag
-import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.junit4.createComposeRule
 import com.lloyds.dictionary.MainActivity
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -24,7 +23,7 @@ class SearchComposeTest {
         rule.setContent {
          MainActivity().SearchScreen()
         }
-        rule.onNode(hasTestTag(MainActivity.SEARCH_TEXTFIELD))
+        rule.onNode(hasTestTag(MainActivity.SEARCH_TESTIFIED))
             .assertIsDisplayed()
     }
 
