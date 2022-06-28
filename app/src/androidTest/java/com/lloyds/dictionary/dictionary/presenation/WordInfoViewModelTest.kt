@@ -1,28 +1,34 @@
 package com.lloyds.dictionary.dictionary.presenation
 
 import android.content.Context
+import android.os.Parcel
+import android.os.Parcelable
 import androidx.test.core.app.ApplicationProvider
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.common.truth.Truth.assertThat
 import com.lloyds.dictionary.core.util.Resource
 import com.lloyds.dictionary.dictionary.data.preferences.UserPreferences
 import com.lloyds.dictionary.dictionary.domain.repository.FakeWordInfoRepositoryTest
 import com.lloyds.dictionary.dictionary.domain.use_cases.GetWordInfo
 import junit.framework.TestCase
-import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.onEach
 import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
 
 @OptIn(ExperimentalCoroutinesApi::class)
-@RunWith(AndroidJUnit4::class)
-class WordInfoViewModelTest : TestCase() {
+class WordInfoViewModelTest() : TestCase(), Parcelable {
 
     private lateinit var viewModel: WordInfoViewModel
     private lateinit var userPreferences: UserPreferences
     lateinit var getWordInfo: GetWordInfo
     private lateinit var fakeWordInfoRepositoryTest: FakeWordInfoRepositoryTest
+
+    constructor(parcel: Parcel) : this() {
+
+    }
 
     @Before
     override fun setUp() {
@@ -63,6 +69,24 @@ class WordInfoViewModelTest : TestCase() {
 
         getWordInfo("bank").onEach { result ->
             assertThat(result is Resource.Loading)
+        }
+    }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<WordInfoViewModelTest> {
+        override fun createFromParcel(parcel: Parcel): WordInfoViewModelTest {
+            return WordInfoViewModelTest(parcel)
+        }
+
+        override fun newArray(size: Int): Array<WordInfoViewModelTest?> {
+            return arrayOfNulls(size)
         }
     }
 }

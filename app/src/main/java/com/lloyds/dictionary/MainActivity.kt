@@ -46,12 +46,12 @@ class MainActivity : ComponentActivity() {
 
     companion object {
 
-        var SPLASH_SCREEN = "splash_screen"
-        var SEARCH_SCREEN = "search_screen"
-        var FIRST_LAUNCH = "first_launch"
-        var LAUNCHED = "launched"
-        var SEARCH_TESTIFIED = "searchTextField"
-        var SEARCH_LOADER = "searchLoader"
+        const val SPLASH_SCREEN = "splash_screen"
+        const val SEARCH_SCREEN = "search_screen"
+        const val FIRST_LAUNCH = "first_launch"
+        const val LAUNCHED = "launched"
+        const val SEARCH_TESTIFIED = "searchTextField"
+        const val SEARCH_LOADER = "searchLoader"
     }
 
     private lateinit var viewModel: WordInfoViewModel
