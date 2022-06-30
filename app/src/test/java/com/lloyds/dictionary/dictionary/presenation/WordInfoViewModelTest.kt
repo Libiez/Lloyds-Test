@@ -1,15 +1,13 @@
 package com.lloyds.dictionary.dictionary.presenation
 
 import android.content.Context
-import android.os.Parcel
-import android.os.Parcelable
 import androidx.test.core.app.ApplicationProvider
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.common.truth.Truth.assertThat
 import com.lloyds.dictionary.core.util.Resource
 import com.lloyds.dictionary.dictionary.data.preferences.UserPreferences
-import com.lloyds.dictionary.dictionary.domain.repository.FakeWordInfoRepositoryTest
+import com.lloyds.dictionary.dictionary.domain.repository.WordInfoRepositoryDataSet
 import com.lloyds.dictionary.dictionary.domain.use_cases.GetWordInfo
-import junit.framework.TestCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
@@ -17,25 +15,22 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.onEach
 import org.junit.Before
 import org.junit.Test
+import org.junit.runner.RunWith
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class WordInfoViewModelTest() : TestCase(), Parcelable {
+@RunWith(AndroidJUnit4::class)
+class WordInfoViewModelTest {
 
     private lateinit var viewModel: WordInfoViewModel
     private lateinit var userPreferences: UserPreferences
     lateinit var getWordInfo: GetWordInfo
-    private lateinit var fakeWordInfoRepositoryTest: FakeWordInfoRepositoryTest
-
-    constructor(parcel: Parcel) : this() {
-
-    }
+    private lateinit var fakeWordInfoRepositoryTest: WordInfoRepositoryDataSet
 
     @Before
-    override fun setUp() {
-        super.setUp()
+    fun setUp() {
         val context = ApplicationProvider.getApplicationContext<Context>()
         userPreferences = UserPreferences(context)
-        fakeWordInfoRepositoryTest = FakeWordInfoRepositoryTest()
+        fakeWordInfoRepositoryTest = WordInfoRepositoryDataSet()
         getWordInfo = GetWordInfo(fakeWordInfoRepositoryTest)
         viewModel = WordInfoViewModel(getWordInfo, userPreferences)
 
@@ -44,7 +39,7 @@ class WordInfoViewModelTest() : TestCase(), Parcelable {
     @Test
     fun testSuccessSearch() = kotlinx.coroutines.test.runTest {
         val firstItem = getWordInfo("bank").first()
-        assertTrue(firstItem.data?.get(0)?.word.equals("bank"))
+        assertThat(firstItem.data?.get(0)?.word.equals("bank"))
     }
 
     @Test
@@ -72,21 +67,5 @@ class WordInfoViewModelTest() : TestCase(), Parcelable {
         }
     }
 
-    override fun writeToParcel(parcel: Parcel, flags: Int) {
 
-    }
-
-    override fun describeContents(): Int {
-        return 0
-    }
-
-    companion object CREATOR : Parcelable.Creator<WordInfoViewModelTest> {
-        override fun createFromParcel(parcel: Parcel): WordInfoViewModelTest {
-            return WordInfoViewModelTest(parcel)
-        }
-
-        override fun newArray(size: Int): Array<WordInfoViewModelTest?> {
-            return arrayOfNulls(size)
-        }
-    }
 }

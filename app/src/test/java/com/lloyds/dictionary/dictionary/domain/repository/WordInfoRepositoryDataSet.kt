@@ -8,7 +8,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-class FakeWordInfoRepositoryTest : WordInfoRepository {
+class WordInfoRepositoryDataSet : WordInfoRepository {
 
     override fun getWordInfo(word: String): Flow<Resource<List<WordInfo>>> {
         return wordFlow
